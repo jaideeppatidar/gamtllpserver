@@ -10,13 +10,18 @@ const BusniessCategoryController = require('../controllers/BusniessCategoryContr
 const upload = require('../multerConfig');
 const  PaymentMethodController  = require('../controllers/PaymentController');
 const router = express.Router();
+
+
+
+router.get('/hello', (req, res) => {
+    res.status(200).json({ message: 'Hello, server is running!' });
+});
 router.post('/registeruser',upload.fields([{ name: 'aadharCard', maxCount: 1 },{ name: 'panCard', maxCount: 1 }]),EmployeeController.createUser);
 router.get('/alluser', EmployeeController.getAllUsers);
 router.put('/update/:userId', EmployeeController.updateUser);
 router.delete('/deleteuser/:userId', EmployeeController.deleteUser);
 router.get("/getemployee/:userId", EmployeeController.getUserById);
 router.put("/approveUser/:userId", LoginController.approveUser);
-// router.post("/verifyOTP/:userId", EmployeeController.verifyOTP);
 
 
 

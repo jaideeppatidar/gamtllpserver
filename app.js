@@ -26,9 +26,7 @@ const storage = multer.diskStorage({
   const upload = multer({ storage });
   app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
   app.use('/uploads', express.static(path.join(__dirname, 'uploads/admin')));
-  router.get('/hello', (req, res) => {
-    res.status(200).json({ message: 'Hello, server is running!' });
-});
+
 
 
 // Middleware
@@ -36,7 +34,7 @@ app.use(express.json());
 // Routes
 app.use('/api', userRoutes);
 // Start server
-const port = process.env.PORT;
+const port = process.env.PORT || 8080
 app.listen(port, () => {
     console.log(`Server running on port  ${port}`);
 });
