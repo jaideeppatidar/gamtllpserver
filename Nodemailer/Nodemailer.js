@@ -18,7 +18,7 @@ const sendWelcomeEmail = async (user, otp) => {
 
     const transporter = nodemailer.createTransport(config);
     const mailOptions = await transporter.sendMail({
-      from: '"hireflex247 Pvt Ltd " <jaideeppatidar3421@gmail.com>',
+      from: '"hireflex247 Pvt Ltd " <gamtllp@gmail.com>',
       to: user.email,
       subject: "Your Employee ID and Login Details",
       html: `

@@ -9,9 +9,8 @@ const BookingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
-    type: String
-  },
+  Months: { type: Number, required: true },
+
   image: {
     type: String
   },
@@ -20,12 +19,6 @@ const BookingSchema = new mongoose.Schema({
     required: true
   },
   dailyIncome: {
-    type: Number
-  },
-  ninetyDayIncome: {
-    type: Number
-  },
-  threeSixtyFiveDayIncome: {
     type: Number
   },
   totalIncome: {

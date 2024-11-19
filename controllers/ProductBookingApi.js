@@ -4,23 +4,21 @@ const userService = require("../services/userServices");
 const User = require('../models/userModel');
 const { default: mongoose } = require("mongoose");
 exports.BookingApi=  async (req, res) => {
-    const { productId, title, description, image, income, dailyIncome, ninetyDayIncome, threeSixtyFiveDayIncome, totalIncome, Persantage, userId, firstName,bookingDate,status } = req.body;
+    const { productId, title, image, income, dailyIncome, totalIncome, Persantage, userId, firstName,bookingDate,status,Months } = req.body;
     try {
       const booking = new Booking({
         productId,
         title,
-        description,
         image,
         income,
         dailyIncome,
-        ninetyDayIncome,
-        threeSixtyFiveDayIncome,
         totalIncome,
         Persantage,
         userId,
         firstName,
         bookingDate: bookingDate || new Date(),
-        status
+        status,
+        Months
       });
       await booking.save();
       await sendBookingEmails({

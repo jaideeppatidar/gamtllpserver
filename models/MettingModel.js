@@ -31,6 +31,7 @@ const EmployeeMettingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+   Months: { type: Number, required: true },
 });
 
 EmployeeMettingSchema.set("toJSON", {

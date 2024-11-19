@@ -4,21 +4,25 @@ exports.productAdd = async (req, res) => {
     console.log('Request body:', req.body);
       console.log('Request file:', req.file);
   
-  
     try {
-      const { ProductName ,Description,Income,Persantage  } = req.body; // Get color from the body
+      const { ProductName ,Description,Income,Persantage,Months  } = req.body; // Get color from the body
       const image = req.file ? req.file.path : null;
+      if (!Months || isNaN(Months) || Months <= 0) {
+        return res.status(400).json({ error: "Months must be a positive number." });
+      }
+  
       const newMetting = new MettingModel({
         ProductName,
         Description,
         Income,
         Persantage,
-        image
+        image,
+        Months
       });
   
       await newMetting.save();
       res.status(201).json({
-        message: "Create Product  successfully",
+        message: "Create Product successfully",
         document: newMetting,
       });
     } catch (error) {
@@ -26,6 +30,7 @@ exports.productAdd = async (req, res) => {
       res.status(500).json({ error: error.message || "An unexpected error occurred" });
     }
   };
+
   exports.getProductByProductId = async (req, res) => {
     try {
       const { productId } = req.params; 
@@ -37,11 +42,11 @@ exports.productAdd = async (req, res) => {
       if (meetings.length === 0) {
         return res.status(404).json({ error: "No meetings found for this product" });
       }
-      const { Income } = req.body; // Get Income value from the request body
+      const { Income } = req.body; 
       if (Income) {
         for (let meeting of meetings) {
-          meeting.Income = Income;  // Assign the value to the Income field of the meeting document
-          await meeting.save(); // Save each meeting document with updated Income value
+          meeting.Income = Income; 
+          await meeting.save(); 
         }
       }
       res.status(200).json({
