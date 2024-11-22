@@ -22,12 +22,8 @@ app.use((req, res, next) => {
 });
 
 connectDB()
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://gamtllp.com'], // Frontend URLs
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+app.use(cors());
+
 
 
 
