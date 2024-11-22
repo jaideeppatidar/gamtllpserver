@@ -8,13 +8,11 @@ const cors = require('cors');
 const router = express.Router();
 const connectDB = require('./db/db')
 require('dotenv').config();
-
+const https = require('https');
+const fs = require('fs');
 const app = express();
-
-// Middleware to redirect HTTP to HTTPS
 app.use((req, res, next) => {
   if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
-    // Remove default port (80) if present
     const host = req.header('host').replace(/:80$/, '');
     // Redirect to HTTPS
     res.redirect(`https://${host}${req.url}`);
@@ -25,10 +23,17 @@ app.use((req, res, next) => {
 
 connectDB()
 app.use(cors({
-  origin: 'https://gamtllp.com',  
+  origin: ['http://localhost:3000', 'https://gamtllp.com'], // Frontend URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
+
+
+
+const key = fs.readFileSync('key.pem');
+const cert = fs.readFileSync('cert.pem');
+
 app.use(express.json());
 
 const storage = multer.diskStorage({
@@ -47,14 +52,14 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads/admin')));
 
 // Middleware
 app.use(express.json());
+app.get('/test-cors', (req, res) => {
+  res.json({ message: 'CORS is working!' });
+});
 
 // Routes
 app.use('/api', userRoutes);
 
-// Start server
-const port = process.env.PORT || 8080
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+https.createServer({ key, cert }, app).listen(8080, () => {
+  console.log('HTTPS Server running on port 8080');
 });
-
 module.exports = app;
