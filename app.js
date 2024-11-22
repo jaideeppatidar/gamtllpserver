@@ -22,7 +22,10 @@ app.use((req, res, next) => {
 });
 
 connectDB()
-app.use(cors());
+app.use(cors({
+  origin: 'https://gamtllp.com'
+})) // This ensures that the OPTIONS request is handled
+
 
 
 
