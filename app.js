@@ -6,60 +6,36 @@ const multer = require("multer");
 const path = require("path");
 const cors = require('cors');
 const router = express.Router();
+
 const connectDB = require('./db/db')
 require('dotenv').config();
-const https = require('https');
-const fs = require('fs');
+
 const app = express();
-app.use((req, res, next) => {
-  if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
-    const host = req.header('host').replace(/:80$/, '');
-    // Redirect to HTTPS
-    res.redirect(`https://${host}${req.url}`);
-  } else {
-    next();
-  }
-});
-
 connectDB()
-app.use(cors({
-  origin: '*', // Ya specific front-end origin like 'https://example.com'
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
-
-
-
-
-
-const key = fs.readFileSync('key.pem');
-const cert = fs.readFileSync('cert.pem');
-
+app.use(cors());
 app.use(express.json());
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/");
+      cb(null, "uploads/"); 
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname));
+      cb(null, Date.now() + path.extname(file.originalname)); 
     },
-});
+  });
+  
+  const upload = multer({ storage });
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads/admin')));
 
-const upload = multer({ storage });
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads/admin')));
 
 // Middleware
 app.use(express.json());
-app.get('/test-cors', (req, res) => {
-  res.json({ message: 'CORS is working!' });
-});
-
 // Routes
 app.use('/api', userRoutes);
-
-https.createServer({ key, cert }, app).listen(8080, () => {
-  console.log('HTTPS Server running on port 8080');
+// Start server
+const port = process.env.PORT || 8080
+app.listen(port, () => {
+    console.log(`Server running on port  ${port}`);
 });
 module.exports = app;
