@@ -23,8 +23,9 @@ app.use((req, res, next) => {
 
 connectDB()
 app.use(cors({
-  origin: 'https://gamtllp.com'
-})) // This ensures that the OPTIONS request is handled
+  origin: '*', // Ya specific front-end origin like 'https://example.com'
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 
 
 
