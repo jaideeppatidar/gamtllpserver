@@ -31,6 +31,8 @@ router.post('/product', upload.single('image'), ProductController.productAdd);
 router.get("/product", ProductController.GetAllProduct);
 router.get('/products/:productId', ProductController.getProductByProductId);
 router.delete('/product/:productId', ProductController.DeleteProduct);
+router.put('/product/:productId', upload.single('image'), ProductController.EditProduct);
+
 
 
 //BookingApi  routes

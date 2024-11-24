@@ -3,7 +3,6 @@ const MettingModel = require("../models/MettingModel");
 exports.productAdd = async (req, res) => {
     console.log('Request body:', req.body);
       console.log('Request file:', req.file);
-  
     try {
       const { ProductName ,Description,Income,Persantage,Months  } = req.body; // Get color from the body
       const image = req.file ? req.file.path : null;
@@ -84,5 +83,31 @@ exports.productAdd = async (req, res) => {
       res.status(500).json({ error: error.message || "An unexpected error occurred" });
     }
   };
+
+  
+  
+  exports.EditProduct = async (req, res) => {
+    try {
+      const { productId } = req.params;
+      const { ProductName, Description, Income, Persantage, Months } = req.body;
+      const updateData = { ProductName, Description, Income, Persantage, Months };
+      if (req.file) {
+        updateData.image = `/uploads/${req.file.filename}`;
+      }
+        const updatedProduct = await MettingModel.findOneAndUpdate(
+        { productId: productId }, 
+        updateData,
+        { new: true, runValidators: true }
+      );
+      res.status(200).json({
+        message: "Product updated successfully",
+        document: updatedProduct,
+      });
+    } catch (error) {
+      console.error("Error updating product:", error);
+      res.status(500).json({ error: error.message || "An unexpected error occurred" });
+    }
+  };
+  
   
   
