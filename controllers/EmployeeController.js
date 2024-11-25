@@ -70,7 +70,7 @@ const generateUserId = async () => {
 // };
 
 const generateReferralCode = () => {
-  const randomStr = Math.random().toString(36).substr(2, 7).toUpperCase(); // Random 7-character string in uppercase
+  const randomStr = Math.random().toString(36).substr(2, 7).toUpperCase(); 
   return `GAMTLLP-${randomStr}`;
 };
 
@@ -105,7 +105,7 @@ exports.createUser = async (req, res) => {
       }
     }
 
-    const newReferralCode = generateReferralCode(userId);
+    const newReferralCode = generateReferralCode();
     console.log("Generated Referral Code:", newReferralCode);
     const referralLink = `https://gamtllp.com/register?referralCode=${newReferralCode}`;
 
@@ -132,9 +132,6 @@ exports.createUser = async (req, res) => {
     if (referrer) {
       await userService.rewardReferrer(referrer._id);
     }
-
-    // Generate the referral link
-
     return res.status(201).json({
       message: "User created successfully",
       user: newUser,

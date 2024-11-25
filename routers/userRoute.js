@@ -7,6 +7,7 @@ const ProductController = require('../controllers/ProductController');
 const ContactController = require('../controllers/ContactController');
 const withdrawalRequest = require('../controllers/withdrawalRequest')
 const BusniessCategoryController = require('../controllers/BusniessCategoryController')
+const AddmenualiIncomeConntroller = require('../controllers/AddmenualiIncomeConntroller')
 const upload = require('../multerConfig');
 const  PaymentMethodController  = require('../controllers/PaymentController');
 const router = express.Router();
@@ -80,5 +81,17 @@ router.get('/payments/:userId', PaymentMethodController.getPaymentDetailsByUserI
 //Login Router 
 router.post('/login',LoginController.loginUser);
 router.post('/employee/login',LoginController.EmployeeloginUser);
+
+
+
+
+
+//  add income menuali 
+router.post('/addincome', AddmenualiIncomeConntroller.Addincome);
+router.put('/addincome/:userId', AddmenualiIncomeConntroller.editincome);
+router.get('/addincome/:userId', AddmenualiIncomeConntroller.GetIncomeByUserId);
+
+
+
 
 module.exports = router;
