@@ -1,12 +1,12 @@
-const AddIncomemodel = require('../models/AddIncomemodel'); // Assuming you have a Booking model
-exports.Addincome = async (req, res) => {
+const ProfiteIncome = require('../models/ProfiteModel'); // Assuming you have a Booking model
+exports.AddProfite = async (req, res) => {
   const {
     productId,
     income,
     userId,
   } = req.body;
   try {
-    const Addincome = new AddIncomemodel({
+    const Addincome = new ProfiteIncome({
       productId,
       income,
       userId,
@@ -18,12 +18,12 @@ exports.Addincome = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-exports.editincome = async (req, res) => {
+exports.AddProfiteEdite = async (req, res) => {
   const { userId } = req.params; 
   const { income, productId } = req.body; 
 
   try {
-    const updatedBooking = await AddIncomemodel.findOneAndUpdate(
+    const updatedBooking = await ProfiteIncome.findOneAndUpdate(
       { userId },
       { income, productId }, 
       { new: true, runValidators: true } 
@@ -33,12 +33,12 @@ exports.editincome = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-exports.GetIncomeByUserId = async (req, res) => {
+exports.getAddProfiteById = async (req, res) => {
   const { userId } = req.params; // Assuming userId is passed as a URL parameter
 
   try {
     // Find the income records by userId
-    const incomeRecords = await AddIncomemodel.find({ userId });
+    const incomeRecords = await ProfiteIncome.find({ userId });
 
     if (incomeRecords.length === 0) {
       return res.status(404).json({ message: "No income records found for this user" });
@@ -50,9 +50,9 @@ exports.GetIncomeByUserId = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-exports.getAllIcome = async (req, res) => {
+exports.getAllProfite = async (req, res) => {
   try {
-    const Income = await AddIncomemodel.find();
+    const Income = await ProfiteIncome.find();
     res.status(200).json(Income);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
@@ -60,10 +60,10 @@ exports.getAllIcome = async (req, res) => {
 };
 
 
-exports.deleteIncome = async (req, res) => {
+exports.deleteProfite = async (req, res) => {
   try {
       const { userId } = req.params;
-            const deletedCategory = await AddIncomemodel.findOneAndDelete(userId);
+            const deletedCategory = await ProfiteIncome.findOneAndDelete(userId);
       res.status(200).json({
           message: " deleted successfully",
           deletedCategory,

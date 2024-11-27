@@ -8,12 +8,11 @@ const ContactController = require('../controllers/ContactController');
 const withdrawalRequest = require('../controllers/withdrawalRequest')
 const BusniessCategoryController = require('../controllers/BusniessCategoryController')
 const AddmenualiIncomeConntroller = require('../controllers/AddmenualiIncomeConntroller')
+const ProfiteController = require('../controllers/DailayIncomeProfiteController')
+
 const upload = require('../multerConfig');
 const  PaymentMethodController  = require('../controllers/PaymentController');
 const router = express.Router();
-
-
-
 router.get('/hello', (req, res) => {
     res.status(200).json({ message: 'Hello, server is running!' });
 });
@@ -23,7 +22,6 @@ router.put('/update/:userId', EmployeeController.updateUser);
 router.delete('/deleteuser/:userId', EmployeeController.deleteUser);
 router.get("/getemployee/:userId", EmployeeController.getUserById);
 router.put("/approveUser/:userId", LoginController.approveUser);
-
 
 
 
@@ -74,23 +72,23 @@ router.get('/getAllPaymentDetails', upload.single('paymentscreensort'), PaymentM
 router.get('/payments/:userId', PaymentMethodController.getPaymentDetailsByUserId);
 
 
-
-
-
-
 //Login Router 
 router.post('/login',LoginController.loginUser);
 router.post('/employee/login',LoginController.EmployeeloginUser);
-
-
-
-
 
 //  add income menuali 
 router.post('/addincome', AddmenualiIncomeConntroller.Addincome);
 router.put('/addincome/:userId', AddmenualiIncomeConntroller.editincome);
 router.get('/addincome/:userId', AddmenualiIncomeConntroller.GetIncomeByUserId);
+router.get('/addincome', AddmenualiIncomeConntroller.getAllIcome);
+router.delete('/addincome/:userId', AddmenualiIncomeConntroller.deleteIncome);
 
+//profite 
+router.post('/profite', ProfiteController.AddProfite);
+router.put('/profiite/:userId', ProfiteController.AddProfiteEdite);
+router.get('/profite/:userId', ProfiteController.getAddProfiteById);
+router.get('/profite', ProfiteController.getAllProfite);
+router.delete('/profite/:userId', ProfiteController.deleteProfite);
 
 
 
