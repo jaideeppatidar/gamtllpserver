@@ -48,9 +48,6 @@ exports.loginUser = async (req, res) => {
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      if (!user.isApproved) {
-        return res.status(403).json({ message: "Account is awaiting approval." });
-      }
         const { token } = await userService.authenticateUser({ email, password });
       
       return res.status(200).json({

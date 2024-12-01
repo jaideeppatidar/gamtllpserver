@@ -119,7 +119,7 @@ exports.createUser = async (req, res) => {
       address,
       aadharCard,
       panCard,
-      isApproved: false,
+      // isApproved: false,
       referralCode: newReferralCode,
       referrerId: referrer ? referrer._id : null,
       referralLink: referralLink 

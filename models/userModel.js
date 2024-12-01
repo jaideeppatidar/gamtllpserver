@@ -43,10 +43,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isApproved: {
-      type: Boolean,
-      default: false,
-    },
+    // isApproved: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     referralCode: {
       type: String,
       unique: true,

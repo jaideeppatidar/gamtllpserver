@@ -85,7 +85,7 @@ router.delete('/addincome/:userId', AddmenualiIncomeConntroller.deleteIncome);
 
 //profite 
 router.post('/profite', ProfiteController.AddProfite);
-router.put('/profiite/:userId', ProfiteController.AddProfiteEdite);
+router.put('/profite/:userId', ProfiteController.AddProfiteEdite);
 router.get('/profite/:userId', ProfiteController.getAddProfiteById);
 router.get('/profite', ProfiteController.getAllProfite);
 router.delete('/profite/:userId', ProfiteController.deleteProfite);
