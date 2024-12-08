@@ -37,10 +37,10 @@ const EmployeeMettingSchema = new mongoose.Schema({
 EmployeeMettingSchema.set("toJSON", {
   transform: (doc, ret) => {
     if (ret.reviewDate) {
-      ret.reviewDate = ret.reviewDate.toISOString().split("T")[0]; // Extract only the date part
+      ret.reviewDate = ret.reviewDate.toISOString().split("T")[0];
     }
     if (ret.nextMeetingDate) {
-      ret.nextMeetingDate = ret.nextMeetingDate.toISOString().split("T")[0]; // Extract only the date part
+      ret.nextMeetingDate = ret.nextMeetingDate.toISOString().split("T")[0]; 
     }
     return ret;
   },

@@ -14,6 +14,8 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    firstName: { type: String, required: true }, 
+    percentage: { type:String, required: true },
   },
   {
     timestamps: true,

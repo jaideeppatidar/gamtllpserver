@@ -92,7 +92,7 @@ exports.productAdd = async (req, res) => {
       const { ProductName, Description, Income, Persantage, Months } = req.body;
       const updateData = { ProductName, Description, Income, Persantage, Months };
       if (req.file) {
-        updateData.image = `/uploads/${req.file.filename}`; // Use req.file.filename for consistent path
+        updateData.image = `${req.file.path}`; // Use req.file.filename for consistent path
       }
        else {
         updateData.image = existingProduct.image; // Retain existing image if no new one is uploaded

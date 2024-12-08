@@ -4,12 +4,16 @@ exports.Addincome = async (req, res) => {
     productId,
     income,
     userId,
+    firstName, 
+    percentage,
   } = req.body;
   try {
     const Addincome = new AddIncomemodel({
       productId,
       income,
       userId,
+      firstName, 
+      percentage,
     });
     await Addincome.save();
    
@@ -20,12 +24,12 @@ exports.Addincome = async (req, res) => {
 };
 exports.editincome = async (req, res) => {
   const { userId } = req.params; 
-  const { income, productId } = req.body; 
+  const { income, productId ,firstName, percentage } = req.body; 
 
   try {
     const updatedBooking = await AddIncomemodel.findOneAndUpdate(
       { userId },
-      { income, productId }, 
+      { income, productId, firstName, percentage },
       { new: true, runValidators: true } 
     );
     res.status(200).json({ message: "Booking updated successfully", booking: updatedBooking });
@@ -63,7 +67,7 @@ exports.getAllIcome = async (req, res) => {
 exports.deleteIncome = async (req, res) => {
   try {
       const { userId } = req.params;
-            const deletedCategory = await AddIncomemodel.findOneAndDelete(userId);
+            const deletedCategory = await AddIncomemodel.findOneAndDelete({userId});
       res.status(200).json({
           message: " deleted successfully",
           deletedCategory,

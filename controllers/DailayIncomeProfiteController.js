@@ -4,12 +4,16 @@ exports.AddProfite = async (req, res) => {
     productId,
     income,
     userId,
+    firstName, 
+    percentage,
   } = req.body;
   try {
     const Addincome = new ProfiteIncome({
       productId,
       income,
       userId,
+      firstName, 
+      percentage,
     });
     await Addincome.save();
    
@@ -20,12 +24,14 @@ exports.AddProfite = async (req, res) => {
 };
 exports.AddProfiteEdite = async (req, res) => {
   const { userId } = req.params; 
-  const { income, productId } = req.body; 
+  const { income, productId , firstName, 
+    percentage, } = req.body; 
 
   try {
     const updatedBooking = await ProfiteIncome.findOneAndUpdate(
       { userId },
-      { income, productId }, 
+      { income, productId , firstName, 
+        percentage, }, 
       { new: true, runValidators: true } 
     );
     res.status(200).json({ message: "Booking updated successfully", booking: updatedBooking });
@@ -63,7 +69,7 @@ exports.getAllProfite = async (req, res) => {
 exports.deleteProfite = async (req, res) => {
   try {
       const { userId } = req.params;
-            const deletedCategory = await ProfiteIncome.findOneAndDelete(userId);
+            const deletedCategory = await ProfiteIncome.findOneAndDelete({userId});
       res.status(200).json({
           message: " deleted successfully",
           deletedCategory,
