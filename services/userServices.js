@@ -125,3 +125,20 @@ exports.rewardReferrer = async (referrerId) => {
 exports.getUserCount = async () => {
   return await User.countDocuments({});
 };
+exports.getReferralDetails = async (referralCode) => {
+  try {
+    const referrer = await User.findOne({ referralCode });
+    if (!referrer) {
+      throw new Error("Referrer not found");
+    }
+
+    const referredUsers = await User.find({ referrerId: referrer._id }).select(
+      "userId firstName email mobile"
+    ); // Select only required fields
+
+    return { referrer, referredUsers };
+  } catch (error) {
+    console.error("Error in getReferralDetails:", error);
+    throw error; // Rethrow error to handle it in the caller function
+  }
+};

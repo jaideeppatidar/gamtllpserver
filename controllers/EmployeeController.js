@@ -107,7 +107,9 @@ exports.createUser = async (req, res) => {
 
     const newReferralCode = generateReferralCode();
     console.log("Generated Referral Code:", newReferralCode);
-    const referralLink = `https://gamtllp.com/register?referralCode=${newReferralCode}`;
+    // const referralLink = `https://gamtllp.com/register?referralCode=${newReferralCode}`;
+    const referralLink = `http://localhost:3000/register?referralCode=${newReferralCode}`;
+
 
     const newUser = await userService.createUser({
       _id: new ObjectId(),
@@ -245,5 +247,36 @@ exports.deleteUser = async (req, res) => {
     res
       .status(500)
       .json({ error: error.message || "An unexpected error occurred" });
+  }
+};
+
+
+
+exports.ReferralCodeData =  async (req, res) => {
+  try {
+    const { referralCode } = req.params;
+
+    // Fetch referral details
+    const { referrer, referredUsers } = await userService.getReferralDetails(referralCode);
+
+    res.status(200).json({
+      message: "Referral details retrieved successfully",
+      referrer: {
+        userId: referrer.userId,
+        firstName: referrer.firstName,
+        email: referrer.email,
+        referralCode: referrer.referralCode,
+        referralLink: referrer.referralLink
+      },
+      referredUsers: referredUsers.map(user => ({
+        userId: user.userId,
+        firstName: user.firstName,
+        email: user.email,
+        mobile: user.mobile
+      }))
+    });
+  } catch (error) {
+    console.error("Error fetching referral details:", error);
+    res.status(400).json({ error: error.message });
   }
 };
